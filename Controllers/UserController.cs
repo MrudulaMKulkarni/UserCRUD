@@ -5,6 +5,9 @@ using UserCRUD.Services;
 
 namespace UserCRUD.Controllers
 {
+    /// <summary>
+    /// UserController Class with all the APIs to GET, CREATE, UPDATE and DELETE documents from MongoDB Collection.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

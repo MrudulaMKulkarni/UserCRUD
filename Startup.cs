@@ -32,8 +32,8 @@ namespace UserCRUD
             services.AddSingleton<IUserDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<UserDatabaseSettings>>().Value);
 
+            //Configured UserService
             services.AddSingleton<UserService>();
-            //services.AddControllersWithViews();
             services.AddControllers();
         }
 

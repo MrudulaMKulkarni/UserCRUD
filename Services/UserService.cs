@@ -5,6 +5,9 @@ using UserCRUD.Models;
 
 namespace UserCRUD.Services
 {
+    /// <summary>
+    /// Created Service to MongoDB call for all the GET, POST, PUT, DELETE API calls from Controller
+    /// </summary>
     public class UserService
     {
         private readonly IMongoCollection<User> _users;
