@@ -1,14 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-//using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
 using UserCRUD.Models;
 using UserCRUD.Services;
 
@@ -28,10 +23,8 @@ namespace UserCRUD
         {
             services.Configure<UserDatabaseSettings>(
                 Configuration.GetSection(nameof(UserDatabaseSettings)));
-
             services.AddSingleton<IUserDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<UserDatabaseSettings>>().Value);
-
             //Configured UserService
             services.AddSingleton<UserService>();
             services.AddControllers();
@@ -52,17 +45,11 @@ namespace UserCRUD
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapControllerRoute(
-                //    name: "default",
-                //    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -24,40 +24,35 @@ namespace UserCRUD.Controllers
             
             _UserService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetUser")]
+        [HttpGet("{id:length(24)}", Name = "GetUserList")]
         public ActionResult<User> Get(string id)
         {
             var usr = _UserService.Get(id);
-
             if (usr == null)
             {
                 return NotFound();
             }
-
             return usr;
         }
-        [HttpPost]
+        [HttpPost(Name = "GetSpecificUser")]
         public ActionResult<User> Post([FromBody] User u)
         {
             User newUser = _UserService.Create(u);
             return newUser;
         }
-        [HttpPut("{id:length(24)}")]
+        [HttpPut("{id:length(24)}",Name ="UpdateSpecificUser")]
         public ActionResult Put(string id, [FromBody] User u)
         {
             var usr = _UserService.Get(id);
-
             if (usr == null)
             {
                 return NotFound();
             }
-
             _UserService.Put(id, u);
-
             return new OkResult();
         }
 
-        [HttpDelete("{id:length(24)}")]
+        [HttpDelete("{id:length(24)}",Name ="DeleteUser")]
         public IActionResult Delete(string id)
         {
             var usr = _UserService.Get(id);
@@ -65,7 +60,6 @@ namespace UserCRUD.Controllers
             {
                 return NotFound();
             }
-
             bool isDeleted = _UserService.Remove(id);
             return new OkResult();
         }

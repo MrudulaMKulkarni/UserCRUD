@@ -15,7 +15,6 @@ namespace UserCRUD.Services
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
-
             _users = database.GetCollection<User>(settings.UsersCollectionName);
         }
         public List<User> Get()
@@ -37,7 +36,6 @@ namespace UserCRUD.Services
         {
             // Create an equality filter
             var filter = Builders<User>.Filter.Eq(usr => usr._id, id);
-
             //update field code
             //// Create an update definition using the Set operator    
             var update = Builders<User>.Update.Set(usr => usr._id, id);            
@@ -73,14 +71,12 @@ namespace UserCRUD.Services
 
                 // Update the document
                 var personUpdateResult = _users.UpdateOne(filter, update);
-
             return u;
         }
         public bool Remove(string id)
         {
             // Create an equality filter
             var filter = Builders<User>.Filter.Eq(usr => usr._id, id);
-
             var DeleteResult = _users.DeleteOne(filter);
             return DeleteResult.IsAcknowledged;
         }
