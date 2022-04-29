@@ -20,10 +20,11 @@ namespace UserCRUD.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<User>> Get() =>
-            
-            _UserService.Get();
-
+        public ActionResult<List<User>> Get()
+        {
+            var usrs =_UserService.Get();
+            return Ok(usrs);
+        }
         [HttpGet("{id:length(24)}", Name = "GetUserList")]
         public ActionResult<User> Get(string id)
         {
@@ -32,13 +33,17 @@ namespace UserCRUD.Controllers
             {
                 return NotFound();
             }
-            return usr;
+            return Ok(usr);
         }
         [HttpPost(Name = "GetSpecificUser")]
-        public ActionResult<User> Post([FromBody] User u)
+        public ActionResult Post([FromBody] User u)
         {
-            User newUser = _UserService.Create(u);
-            return newUser;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var newUser = _UserService.Create(u);
+            return CreatedAtAction("Get", new { id = newUser._id }, newUser);
         }
         [HttpPut("{id:length(24)}",Name ="UpdateSpecificUser")]
         public ActionResult Put(string id, [FromBody] User u)
@@ -49,7 +54,7 @@ namespace UserCRUD.Controllers
                 return NotFound();
             }
             _UserService.Put(id, u);
-            return new OkResult();
+            return Ok();
         }
 
         [HttpDelete("{id:length(24)}",Name ="DeleteUser")]
@@ -60,8 +65,8 @@ namespace UserCRUD.Controllers
             {
                 return NotFound();
             }
-            bool isDeleted = _UserService.Remove(id);
-            return new OkResult();
+            _UserService.Remove(id);
+            return Ok();
         }
     }
 }
